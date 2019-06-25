@@ -72,3 +72,42 @@ Resources:
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId: 
         Ref: myInternetGateway
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow http to client host
+      VpcId:
+        Ref: myVPC
+      Tags:
+      - Key: Name
+        Value: CloudFormation
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 80
+        ToPort: 80
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 68.251.37.193/32
+      SecurityGroupEgress:
+      - IpProtocol: tcp
+        FromPort: 80
+        ToPort: 80
+        CidrIp: 0.0.0.0/0
+
+Outputs:
+  mySecGroup:
+    Value:
+      Ref: InstanceSecurityGroup
+    Export:
+      Name: SecGroup
+  mySubnet1:
+    Value:
+      Ref: mySubnet1
+    Export:
+      Name: PubSub
+  
+
+
+

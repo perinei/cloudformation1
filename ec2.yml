@@ -1,0 +1,12 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: EC2
+Resources: 
+  myEC2:
+      Type: AWS::EC2::Instance
+      Properties:      
+        InstanceType: t2.micro
+        ImageId: ami-0cc96feef8c6bbff3 # Amazon Linux 2
+        SubnetId:
+          Fn::ImportValue: PubSub
+        SecurityGroupIds:
+        - Fn::ImportValue: SecGroup
