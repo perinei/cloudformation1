@@ -1,10 +1,34 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: EC2
+
+Parameters: 
+  InstanceTypeParameter: 
+    Type: String
+    Default: t2.micro
+    AllowedValues: 
+      - t2.micro
+      - m1.small
+      - m1.large
+    Description: Enter t2.micro, m1.small, or m1.large. Default is t2.micro.
+
+Mappings: 
+  envName: 
+    Prod: 
+      t1: "Producao_1"
+      t2: "Producao_2"
+    Dev: 
+      t1: "Desenvolvimento_1"
+      t2: "Desenvolvimento_2"
+
 Resources: 
   myEC2:
       Type: AWS::EC2::Instance
-      Properties:      
-        InstanceType: t2.micro
+      Properties:
+        Tags:
+        - Key: Name
+          Value: !FindInMap [ envName, !Ref Prod, !Ref t1 ]      
+        InstanceType: 
+          Ref: InstanceTypeParameter
         ImageId: ami-0cc96feef8c6bbff3 # Amazon Linux 2
         SubnetId:
           Fn::ImportValue: PubSub
