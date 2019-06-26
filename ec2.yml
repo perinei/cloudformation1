@@ -10,6 +10,10 @@ Parameters:
       - m1.small
       - m1.large
     Description: Enter t2.micro, m1.small, or m1.large. Default is t2.micro.
+  KeyName:
+    ConstraintDescription: must be the name of an existing EC2 KeyPair.
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instances
+    Type: AWS::EC2::KeyPair::KeyName
 
 Mappings: 
   envName: 
@@ -35,3 +39,5 @@ Resources:
           Fn::ImportValue: PubSub
         SecurityGroupIds:
         - Fn::ImportValue: SecGroup
+        KeyName:
+          Ref: KeyName
