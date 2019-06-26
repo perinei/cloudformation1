@@ -26,7 +26,8 @@ Resources:
       Properties:
         Tags:
         - Key: Name
-          Value: !FindInMap [ envName, !Ref Prod, !Ref t1 ]      
+          Value:
+            Fn::FindInMap: [ envName, Prod, t1 ]      
         InstanceType: 
           Ref: InstanceTypeParameter
         ImageId: ami-0cc96feef8c6bbff3 # Amazon Linux 2
